@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My Wish List</title>
+    <a href="/">Logout</a>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+<body>
+    <h1>Hello {{ request.session.first_name }}!</h1>
+    <h3>Your Wish List</h3>
+    <div>
+        <table style="width:30%" border="1">
+        <tr>
+            <th>Item</th>
+            <th>Added By</th>
+            <th>Date Added</th>
+            <th>Action</th>
+        </tr>
+         {% for items in my_list %}
+        <tr>
+            <td><a href="/wish_list/{{items.id}}">{{ items.item }}</a></td>
+            <td>{{ items.added_by.first_name}}</td>
+            <td>{{ items.date_added}}</td>
+            <td><a href="/removeItem/{{items.id}}">Remove from my Wishlist</a> | <a href="/deleteItem/{{items.id}}">Delete Item</a></td>
+        </tr>
+        {% endfor %}
+        </table>
+        <br> 
+    </div>
+    <br>
+    <h3>Other User's Wish List</h3>
+    <div>
+        <table style="width:30%" border="1">
+            <tr>
+                <th>Item</th>
+                <th>Added By</th>
+                <th>Date Added</th>
+                <th>Action</th>
+            </tr>
+            {% for items in not_my_list %}
+            <tr>
+                <td><a href="/wish_list/{{items.id}}">{{ items.item }}</a></td>
+                <td>{{ items.added_by.first_name}}</td>
+                <td>{{ items.date_added}}</td>
+                <td>
+                    <a href="/addItem/{{items.id}}">Add to my Wishlist </a> | <a href="/deleteItem/{{items.id}}">Delete Item</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <p><a href="/create">Add Item</a></p>
+</body>
+</html>
